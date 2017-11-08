@@ -10,7 +10,7 @@
     <div class="refresh">
       <div v-show='pull_down'>下拉刷新</div>
       <div v-show='release'>释放刷新</div>
-      <div v-show='reflesh'>正在刷新</div>
+      <div v-show='refresh'>正在刷新</div>
     </div>
     <slot></slot>
     <div class="pullup" v-show="show_loading">加载中</div>
@@ -23,7 +23,7 @@
         show_loading: false,
         pull_down: false,
         release: false,
-        reflesh: false,
+        refresh: false,
         startY: 0,
         pullHeight: -1,
         rollback: false
@@ -53,7 +53,7 @@
       touchStart($event) {
         this.startY = $event.targetTouches[0].pageY
         this.pull_down=true //初始化
-        this.reflesh=false
+        this.refresh=false
         this.release=false
         
       },
@@ -77,17 +77,17 @@
       },
       touchEndListener(){
         this.release=false
-        this.reflesh=true
+        this.refresh=true
         this.refreshPage(this.refreshEnd)//传回的函数
         this.$el.removeEventListener('transitionend', this.touchEndListener)
       },
       refreshEnd(){//刷新结束后
-        this.$el.addEventListener('transitionend', this.refleshEndListener)
+        this.$el.addEventListener('transitionend', this.refreshEndListener)
         this.pullHeight = -1
       },
-      refleshEndListener(){
+      refreshEndListener(){
         this.rollback = false
-        this.$el.removeEventListener('transitionend', this.refleshEndListener)
+        this.$el.removeEventListener('transitionend', this.refreshEndListener)
       },
     }
   }
