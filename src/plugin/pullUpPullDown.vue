@@ -8,9 +8,9 @@
   :class="{'rollback': rollback}"
   >
     <div class="refresh">
-      <div v-show='pull_down'>下拉刷新</div>
-      <div v-show='release'>释放刷新</div>
-      <div v-show='refresh'>正在刷新</div>
+      <div v-show='pull_down'><span>下拉刷新</span></div>
+      <div v-show='release'><span>释放刷新</span></div>
+      <div v-show='refresh'><span>正在刷新</span></div>
     </div>
     <slot></slot>
     <div class="pullup" v-show="show_loading">加载中</div>
@@ -47,7 +47,8 @@
         }
       },
       loadMoreEnd() {
-        this.show_loading = false
+        console.log("end")
+        // this.show_loading = false
       },
       touchStart($event) {
         this.startY = $event.targetTouches[0].pageY
@@ -72,7 +73,9 @@
           this.rollback = true
           this.pullHeight = 0
           this.$el.addEventListener('transitionend', this.touchEndListener)
-        }   
+        } else{
+           this.refreshEnd()
+        }  
       },
       touchEndListener(){
         this.release=false
@@ -98,6 +101,7 @@
     height: 100%;
     overflow: auto;
     height: calc(100% + 1rem);
+    font-size: 0.3rem
   }
   .plugin_pull.rollback {
     transition: transform .5s;
@@ -105,15 +109,19 @@
   .plugin_pull .refresh {
     height: 1rem;
     position: relative;
-    background:yellowgreen;
     overflow: hidden;
+
     /* margin-top: -1rem; */
   }
   .plugin_pull .refresh div {
     position: absolute;
+    bottom: 0;
+    width: 100%;
   }
-  /* .pullShow{
-    margin-top: -1rem;
-  } */
+  .plugin_pull .refresh span{
+    margin: 0 auto;
+  }
+
 
 </style>
+
