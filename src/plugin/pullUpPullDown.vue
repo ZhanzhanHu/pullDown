@@ -47,8 +47,7 @@
         }
       },
       loadMoreEnd() {
-        console.log("end")
-        // this.show_loading = false
+        this.show_loading = false
       },
       touchStart($event) {
         this.startY = $event.targetTouches[0].pageY
